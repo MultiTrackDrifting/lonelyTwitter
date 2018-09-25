@@ -1,41 +1,40 @@
 package ca.ualberta.cs.lonelytwitter;
 
-import java.util.ArrayList;
 import java.util.Date;
-//Can't edit actual tweets as stored in the program to use these without rewritting save/load
-//And thats next lab, so this can stay here for now.
-//figure out how to actually pick a mood afterwards as well.
 
-//I'm also not doing all that stuff we saw in lab, I assume its just examples because its not overly useful.
-public class Tweet {
-    private ArrayList<Mood> Moods = new ArrayList<Mood>();
+public abstract class Tweet implements Tweetable {
+
+    private Date date;
     private String message;
-    private Date curtime;
-    private static final Integer MAX_CHARS= 140;
+    private static final Integer MAX_CHARS = 140;
 
-    public Tweet(String text){
-        this.message = text;
-        curtime = new Date();
-    }
-    public Tweet(){
-        this.message = "Default message!";
-        curtime = new Date();
-    }
-    public void AddMood(Mood x){
-        Moods.add(x);
-    }
-    public Date getDate(){
-        return curtime;
+    //Empty argument constructor with default values
+    Tweet() {
+        //Must use the 'this' keyword in order to specify the current object message = message does nothing!
+        this.date = new Date();
+        this.message = "I am default message schwa!";
     }
 
-    public String getMessage(){
+    //Overloading: so that we can specify the tweet content
+    Tweet(String message) {
+        this.date = new Date();
+        this.message = message;
+    }
+
+    public String getMessage() {
         return this.message;
     }
 
-    public void setMessage(String newmessage) throws TweetTooLongException {
-        if(message.length() > Tweet.MAX_CHARS){
+    public void setMessage(String message) throws TweetTooLongException {
+        if (message.length() <= this.MAX_CHARS ) {
+            this.message = message;
+        } else {
             throw new TweetTooLongException();
         }
-        message = newmessage;
     }
+
+    public Date getDate() { return this.date; }
+
+    //No method body implemented! We leave that up to the subclasses (they MUST implement it)
+    public abstract Boolean isImportant();
 }

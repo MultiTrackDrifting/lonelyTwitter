@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-
 public class LonelyTwitterActivity extends Activity {
 
 	private static final String FILENAME = "file.sav";
@@ -49,7 +48,6 @@ public class LonelyTwitterActivity extends Activity {
 
 	@Override
 	protected void onStart() {
-		// TODO Auto-generated method stub
 		super.onStart();
 		String[] tweets = loadFromFile();
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -79,10 +77,12 @@ public class LonelyTwitterActivity extends Activity {
 	}
 	
 	private void saveInFile(String text, Date date) {
-		ArrayList<String> tweets = new ArrayList<String>();
-		ArrayList<Tweet> tweetList = new ArrayList<Tweet>();
 		try {
-			FileOutputStream fos = openFileOutput(FILENAME,
+
+		    NormalTweet myTweet = new NormalTweet("");
+		    myTweet.setMessage("I am looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong message");
+
+		    FileOutputStream fos = openFileOutput(FILENAME,
 					Context.MODE_APPEND);
 			fos.write(new String(date.toString() + " | " + text)
 					.getBytes());
@@ -94,6 +94,8 @@ public class LonelyTwitterActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		catch (TweetTooLongException e) {
+            e.printStackTrace();
+        }
 	}
 }
-
