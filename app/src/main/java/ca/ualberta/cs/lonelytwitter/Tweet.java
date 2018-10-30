@@ -3,10 +3,10 @@ package ca.ualberta.cs.lonelytwitter;
 import java.util.Date;
 
 public abstract class Tweet {
-    public String message;
-    public Date date;
+    private String message;//should be private
+    private Date date; //should be private
 
-    public Tweet(String message){
+    Tweet(String message){ //can be package private
         this.message = message;
         this.date = new Date();
     }
